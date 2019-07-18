@@ -25,7 +25,7 @@
             <p>Current Word</p>
             <p id="currentWord"></p>
             <p>Number of Guesses Remaining</p>
-            <p>12</p>
+            <p id = "guesses">12</p>
             <p>Letters already guessed</p>
             <p id="guessedLetters"></p>
         </div>
@@ -69,6 +69,8 @@
 
         restartGame: function () {
             guessRemainder = 12;
+            document.getElementById("guesses").innerHTML = guessRemainder;
+            
             chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
             console.log("New song: " + chosenSong);
 
@@ -91,6 +93,7 @@
         } else {
             guessRemainder--;
             console.log("Lost a guess. Remaining: " + guessRemainder);
+            document.getElementById("guesses").innerHTML = guessRemainder;
         }
 
         if (guessRemainder <= 0) {
