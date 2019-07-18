@@ -38,17 +38,14 @@
 
     const songNames = ["Clocks", "Mountain Sound", "Goodbye Yellow Brick Road"];
     let chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
+    chosenSong = chosenSong.replace(/\s/g, ''); //This removes spaces from the chosen song name.
 
     console.log("Chosen Song: " + chosenSong);
 
     let game = {
         listOutSpaces: function (array) {
             for (i = 0; i < array.length; i++) {
-                if (array[i] === " ") {
-                    console.log("Space detected! Skipping line add.");
-                } else {
-                    document.getElementById("currentWord").innerHTML += "<span class = 'letter'>" + array[i] + "</span>";
-                }
+                document.getElementById("currentWord").innerHTML += "<span class = 'letter'>" + array[i] + "</span>"; //Maybe change to appendChild - see notes
             }
         },
 
@@ -58,13 +55,15 @@
                 let child = parent.querySelectorAll("span");
                 let spanChar = child[i].innerHTML;
 
-                console.log("Checking space " + i + "; Key: " + key + "; span's char: " + spanChar);
-
                 if (key === spanChar) {
-                    console.log("Matched!")
                     child[i].style.color = "black";
                 }
             }
+        },
+
+        checkForWin: function () {
+            console.log("CHECK FOR WIN");
+            // Need to figure out how to see if all the "guessedLetters" match the "chosenSong" variable
         },
 
         restartGame: function () {
@@ -88,13 +87,16 @@
         let userInput = logKey.key
 
         if (guessedLetters.indexOf(userInput) > -1) {
-            console.log("already guessed letter");
+            console.log("already guessed that letter");
         } else {
-            guessedLetters.push(userInput);
+            guessedLetters.push(userInput); // IF not already guessed, push the char to the guessed list.
 
             if (chosenSong.indexOf(userInput) > -1) { //Checks to see if the user's input matches any letter in lowercased song name
-                console.log("Correct guess")
+                console.log("Correct guess");
                 game.addUserGuessToSpaces(userInput);
+
+                console.log("running checkForWin");
+                game.checkForWin();
             } else {
                 guessRemainder--;
                 console.log("Lost a guess. Remaining: " + guessRemainder);
