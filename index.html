@@ -39,6 +39,8 @@
     const songNames = ["Clocks", "Mountain Sound", "Goodbye Yellow Brick Road"];
     let chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
 
+    console.log("Chosen Song: " + chosenSong);
+
     function listSpaces(x) {
         for (i = 0; i < x.length; i++) {
             if (x[i] === " ") {
@@ -53,6 +55,16 @@
         }
     }
 
+    function restartGame () {
+        guessRemainder = 12;
+        chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
+        console.log("New song: " + chosenSong);
+
+        document.getElementById("currentWord").innerHTML = "";
+
+        listSpaces(chosenSong);
+    }
+
     listSpaces(chosenSong);
 
     document.onkeyup = function (logKey) {
@@ -62,7 +74,12 @@
             console.log("Correct guess");
         } else {
             guessRemainder--;
-            console.log("Lost a guess.");
+            console.log("Lost a guess. Remaining: " + guessRemainder);
+        }
+
+        if (guessRemainder <= 0) {
+            console.log("Ending Game.");
+            restartGame();
         }
     }
 </script>
