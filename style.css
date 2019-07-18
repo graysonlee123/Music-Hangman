@@ -1,0 +1,38 @@
+h1 {
+    font-family: arial, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+h2 {
+    font-family: arial, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+p {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+section {
+    width: 600px;
+    height: auto;
+    margin: 60px auto;
+    overflow: auto;
+}
+
+.column {
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+    float: left;
+    background-color: #eee;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word Guess Game</title>
+
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1>Word Guess</h1>
+    <h2>Title of song here</h2>
+    <section>
+        <div class = "column">
+            <img src="https://via.placeholder.com/200" alt="placeholder">
+        </div>
+        <div class = "column">
+            <p>Press any key to get started!</p>
+            <p>Wins</p>
+            <p id = "wins">0</p>
+            <p>Current Word</p>
+            <p id = "currentWord"></p>
+            <p>Number of Guesses Remaining</p>
+            <p>12</p>
+            <p>Letters already guessed</p>
+            <p id = "guessedLetters">None</p>
+        </div>
+    </section>
+</body>
+<script>
+    let wins = 0;
+    let guessRemainder = 0;
+    let guessedLetters = [];
+
+    const songNames = ["Clocks", "Mountain Sound", "Goodbye Yellow Brick Road"];
+    let chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
+
+    document.onkeyup = function(logKey) {
+        let userInput = logKey.key
+        console.log(userInput);
+        if (userInput == "a") {
+
+        }
+    }
+</script>
+</html>
