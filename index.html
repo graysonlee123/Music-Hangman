@@ -13,7 +13,7 @@
 
 <body>
     <h1>Word Guess</h1>
-    <h2>Title of song here</h2>
+    <h2 id = "songName">Title of song here</h2>
     <section>
         <div class="column">
             <img src="https://via.placeholder.com/200" alt="placeholder">
@@ -35,17 +35,12 @@
     let wins = 0;
     let guessRemainder = 12;
     let guessedLetters = [];
+    let letterBools = [];
 
-    const songNames = ["Clocks"];
-    let chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
-    chosenSong = chosenSong.replace(/\s/g, ''); //This removes spaces from the chosen song name.
-
-    let songArray = []; //turns the song name into an array
-
-    for (i = 0; i < chosenSong.length; i++) {
-        songArray.push(chosenSong[i]);
-        console.log(songArray);
-    }
+    const songNames = ["Africa", "Stairway to Heaven"];
+    let chosenSong = songNames[Math.floor(Math.random() * songNames.length)];
+    let unformattedChosenSong = chosenSong;
+    chosenSong = chosenSong.replace(/\s/g, '').toLowerCase(); //This removes spaces from the chosen song name.
 
     console.log("Chosen Song: " + chosenSong);
 
@@ -64,29 +59,46 @@
 
                 if (key === spanChar) {
                     child[i].style.color = "black";
+                    letterBools[i] = true;
                 }
             }
         },
 
-        checkForWin: function () {
-            let lostRoundBool = true;
-            let x = document.getElementsByClassName("letter");
-
-            for (let i = 0; i < guessedLetters.length; i ++) {
-                let y = x[i].style.color;
-                for (let j = 0; j < chosenSong.length; j ++) {
-                    if (x == chosenSong[j]) {
-                        console.log("MATCH");
-                    }
+        checkForWin: function (condition) {
+            let result = true;
+            for (let i = 0; i < letterBools.length; i ++) {
+                if (letterBools[i] == false) {
+                    result = false;
+                    break;
                 }
             }
+            return result;
         },
+
+        
+        createLetterBools: function () {
+            for (let i = 0; i < chosenSong.length; i ++) {
+                letterBools.push(false);
+            }
+        },
+
+        playSong: function(file) {
+            let myMusic = new Audio('songs/' + file + '.mp3');
+            myMusic.play();
+        },
+
+        setImg: function(file) {
+            let x = document.querySelector("img");
+            x.src = "images/" + file + ".jpg";
+        }, 
 
         restartGame: function () {
             guessRemainder = 12;
             document.getElementById("guesses").innerHTML = guessRemainder;
 
-            chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
+            chosenSong = songNames[Math.floor(Math.random() * songNames.length)];
+            unformattedChosenSong = chosenSong;
+            chosenSong = chosenSong.replace(/\s/g, '').toLowerCase(); // remove spaces
             console.log("New song: " + chosenSong);
 
             document.getElementById("currentWord").innerHTML = "";
@@ -94,12 +106,18 @@
             game.listOutSpaces(chosenSong);
 
             guessedLetters = [];
-        }
+            document.getElementById("guessedLetters").innerHTML = "";
+
+            letterBools = [];
+
+            game.createLetterBools();
+        },
     }
 
     // game run logic
 
     game.listOutSpaces(chosenSong);
+    game.createLetterBools();
 
     document.onkeyup = function (logKey) {
         let userInput = logKey.key
@@ -113,7 +131,13 @@
                 console.log("Correct guess: " + userInput);
                 game.addUserGuessToSpaces(userInput);
 
-                game.checkForWin();
+                if (game.checkForWin() == true) {
+                    game.playSong(chosenSong);
+                    game.setImg(chosenSong);
+                    document.querySelector("#songName").innerHTML = "Last round's song was: <strong>" + unformattedChosenSong + "</br>";
+                    game.restartGame();
+                    console.log("YOU HAVE WON!");
+                }
             } else {
                 guessRemainder--;
                 console.log("Lost a guess. Remaining: " + guessRemainder);
