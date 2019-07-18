@@ -36,9 +36,16 @@
     let guessRemainder = 12;
     let guessedLetters = [];
 
-    const songNames = ["Clocks", "Mountain Sound", "Goodbye Yellow Brick Road"];
+    const songNames = ["Clocks"];
     let chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
     chosenSong = chosenSong.replace(/\s/g, ''); //This removes spaces from the chosen song name.
+
+    let songArray = []; //turns the song name into an array
+
+    for (i = 0; i < chosenSong.length; i++) {
+        songArray.push(chosenSong[i]);
+        console.log(songArray);
+    }
 
     console.log("Chosen Song: " + chosenSong);
 
@@ -62,8 +69,17 @@
         },
 
         checkForWin: function () {
-            console.log("CHECK FOR WIN");
-            // Need to figure out how to see if all the "guessedLetters" match the "chosenSong" variable
+            let lostRoundBool = true;
+            let x = document.getElementsByClassName("letter");
+
+            for (let i = 0; i < guessedLetters.length; i ++) {
+                let y = x[i].style.color;
+                for (let j = 0; j < chosenSong.length; j ++) {
+                    if (x == chosenSong[j]) {
+                        console.log("MATCH");
+                    }
+                }
+            }
         },
 
         restartGame: function () {
@@ -76,6 +92,8 @@
             document.getElementById("currentWord").innerHTML = "";
 
             game.listOutSpaces(chosenSong);
+
+            guessedLetters = [];
         }
     }
 
@@ -92,10 +110,9 @@
             guessedLetters.push(userInput); // IF not already guessed, push the char to the guessed list.
 
             if (chosenSong.indexOf(userInput) > -1) { //Checks to see if the user's input matches any letter in lowercased song name
-                console.log("Correct guess");
+                console.log("Correct guess: " + userInput);
                 game.addUserGuessToSpaces(userInput);
 
-                console.log("running checkForWin");
                 game.checkForWin();
             } else {
                 guessRemainder--;
