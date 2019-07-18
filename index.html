@@ -25,7 +25,7 @@
             <p>Current Word</p>
             <p id="currentWord"></p>
             <p>Number of Guesses Remaining</p>
-            <p id = "guesses">12</p>
+            <p id="guesses">12</p>
             <p>Letters already guessed</p>
             <p id="guessedLetters"></p>
         </div>
@@ -58,8 +58,8 @@
                 let child = parent.querySelectorAll("span");
                 let spanChar = child[i].innerHTML;
 
-                console.log("Checking space " + i + "; Key: " + key + "; span's char: " +spanChar);
-                
+                console.log("Checking space " + i + "; Key: " + key + "; span's char: " + spanChar);
+
                 if (key === spanChar) {
                     console.log("Matched!")
                     child[i].style.color = "black";
@@ -70,7 +70,7 @@
         restartGame: function () {
             guessRemainder = 12;
             document.getElementById("guesses").innerHTML = guessRemainder;
-            
+
             chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
             console.log("New song: " + chosenSong);
 
@@ -87,18 +87,25 @@
     document.onkeyup = function (logKey) {
         let userInput = logKey.key
 
-        if (chosenSong.indexOf(userInput) > -1) { //Checks to see if the user's input matches any letter in lowercased song name
-            console.log("Correct guess")
-            game.addUserGuessToSpaces(userInput);
+        if (guessedLetters.indexOf(userInput) > -1) {
+            console.log("already guessed letter");
         } else {
-            guessRemainder--;
-            console.log("Lost a guess. Remaining: " + guessRemainder);
-            document.getElementById("guesses").innerHTML = guessRemainder;
-        }
+            guessedLetters.push(userInput);
 
-        if (guessRemainder <= 0) {
-            console.log("Ending Game.");
-            game.restartGame();
+            if (chosenSong.indexOf(userInput) > -1) { //Checks to see if the user's input matches any letter in lowercased song name
+                console.log("Correct guess")
+                game.addUserGuessToSpaces(userInput);
+            } else {
+                guessRemainder--;
+                console.log("Lost a guess. Remaining: " + guessRemainder);
+                document.getElementById("guesses").innerHTML = guessRemainder;
+                document.getElementById("guessedLetters").innerHTML += userInput + ", "; //pushes wrong letter to guess letters p
+            }
+
+            if (guessRemainder <= 0) {
+                console.log("Ending Game.");
+                game.restartGame();
+            }
         }
     }
 </script>
