@@ -36,3 +36,8 @@ section {
     float: left;
     background-color: #eee;
 }
+
+.letter {
+    color: #eee;
+    border-bottom: 1px solid grey;
+}

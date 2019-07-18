@@ -27,7 +27,7 @@
             <p>Number of Guesses Remaining</p>
             <p>12</p>
             <p>Letters already guessed</p>
-            <p id="guessedLetters">None</p>
+            <p id="guessedLetters"></p>
         </div>
     </section>
 </body>
@@ -41,37 +41,53 @@
 
     console.log("Chosen Song: " + chosenSong);
 
-    function listSpaces(x) {
-        for (i = 0; i < x.length; i++) {
-            if (x[i] === " ") {
-                console.log("Space detected! Skipping line add.");
-            } else {
-                let node = document.createElement("SPAN");
-                let textnode = document.createTextNode("_ ");
-
-                node.appendChild(textnode);
-                document.getElementById("currentWord").appendChild(node);
+    let game = {
+        listOutSpaces: function (array) {
+            for (i = 0; i < array.length; i++) {
+                if (array[i] === " ") {
+                    console.log("Space detected! Skipping line add.");
+                } else {
+                    document.getElementById("currentWord").innerHTML += "<span class = 'letter'>" + array[i] + "</span>";
+                }
             }
+        },
+
+        addUserGuessToSpaces: function (key) {
+            for (i = 0; i < chosenSong.length; i++) {
+                let parent = document.getElementById("currentWord");
+                let child = parent.querySelectorAll("span");
+                let spanChar = child[i].innerHTML;
+
+                console.log("Checking space " + i + "; Key: " + key + "; span's char: " +spanChar);
+                
+                if (key === spanChar) {
+                    console.log("Matched!")
+                    child[i].style.color = "black";
+                }
+            }
+        },
+
+        restartGame: function () {
+            guessRemainder = 12;
+            chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
+            console.log("New song: " + chosenSong);
+
+            document.getElementById("currentWord").innerHTML = "";
+
+            game.listOutSpaces(chosenSong);
         }
     }
 
-    function restartGame () {
-        guessRemainder = 12;
-        chosenSong = songNames[Math.floor(Math.random() * songNames.length)].toLowerCase();
-        console.log("New song: " + chosenSong);
+    // game run logic
 
-        document.getElementById("currentWord").innerHTML = "";
-
-        listSpaces(chosenSong);
-    }
-
-    listSpaces(chosenSong);
+    game.listOutSpaces(chosenSong);
 
     document.onkeyup = function (logKey) {
         let userInput = logKey.key
 
         if (chosenSong.indexOf(userInput) > -1) { //Checks to see if the user's input matches any letter in lowercased song name
-            console.log("Correct guess");
+            console.log("Correct guess")
+            game.addUserGuessToSpaces(userInput);
         } else {
             guessRemainder--;
             console.log("Lost a guess. Remaining: " + guessRemainder);
@@ -79,7 +95,7 @@
 
         if (guessRemainder <= 0) {
             console.log("Ending Game.");
-            restartGame();
+            game.restartGame();
         }
     }
 </script>
