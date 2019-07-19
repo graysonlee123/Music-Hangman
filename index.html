@@ -8,28 +8,49 @@
     <title>Word Guess Game</title>
 
     <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <h1>Word Guess</h1>
-    <h2 id = "songName">Title of song here</h2>
+    <div class="container-fluid bg-dark text-center text-white py-4">
+        <h1>Word Guess Game</h1>
+        <h2 id="songName">Press any letter of the alphabet to get started!</h2>
+    </div>
     <section>
         <div class="column">
             <img src="https://via.placeholder.com/200" alt="placeholder">
         </div>
         <div class="column">
-            <p>Press any key to get started!</p>
-            <p>Wins</p>
+            <p class = ""><strong>Wins</strong></p>
             <p id="wins">0</p>
-            <p>Current Word</p>
+            <hr>
+            <p class = ""><strong>Current Word</strong></p>
             <p id="currentWord"></p>
-            <p>Number of Guesses Remaining</p>
+            <hr>
+            <p><strong>Number of Guesses Remaining</strong></p>
             <p id="guesses">12</p>
-            <p>Letters already guessed</p>
-            <p id="guessedLetters"></p>
+            <hr>
+            <p class = ""><strong>Letters already guessed</strong></p>
+            <p id="guessedLetters">None yet</p>
         </div>
     </section>
+
+    <audio id="africa">
+        <source src="./songs/africa.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="stairwaytoheaven">
+        <source src="./songs/stairwaytoheaven.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="letsgroove">
+        <source src="./songs/letsgroove.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
 </body>
 <script>
     let wins = 0;
@@ -58,7 +79,7 @@
                 let spanChar = child[i].innerHTML;
 
                 if (key === spanChar) {
-                    child[i].style.color = "black";
+                    child[i].style.fontSize = "16px";
                     letterBools[i] = true;
                 }
             }
@@ -66,7 +87,7 @@
 
         checkForWin: function (condition) {
             let result = true;
-            for (let i = 0; i < letterBools.length; i ++) {
+            for (let i = 0; i < letterBools.length; i++) {
                 if (letterBools[i] == false) {
                     result = false;
                     break;
@@ -75,24 +96,36 @@
             return result;
         },
 
-        
+
         createLetterBools: function () {
-            for (let i = 0; i < chosenSong.length; i ++) {
+            for (let i = 0; i < chosenSong.length; i++) {
                 letterBools.push(false);
             }
         },
 
-        playSong: function(file) {
-            let myMusic = new Audio('songs/' + file + '.mp3');
-            myMusic.play();
+        audio: {
+            playSong: function (id) {
+                let x = document.getElementById(id);
+                x.play();
+            },
+
+            stopSong: function () {
+                let x = document.querySelectorAll("audio");
+                x.forEach(function(song) {
+                    song.pause();
+                })
+            }
         },
 
-        setImg: function(file) {
+        setImg: function (file) {
             let x = document.querySelector("img");
             x.src = "images/" + file + ".jpg";
-        }, 
+        },
 
         restartGame: function () {
+            game.audio.stopSong();
+            game.audio.playSong(chosenSong);
+
             guessRemainder = 12;
             document.getElementById("guesses").innerHTML = guessRemainder;
 
@@ -111,6 +144,8 @@
             letterBools = [];
 
             game.createLetterBools();
+
+            document.getElementById("guessedLetters").innerHTML = "None yet";
         },
     }
 
@@ -125,25 +160,28 @@
         if (guessedLetters.indexOf(userInput) > -1) {
             console.log("already guessed that letter");
         } else {
-            guessedLetters.push(userInput); // IF not already guessed, push the char to the guessed list.
+            guessedLetters.push(userInput); // If not already guessed, push the char to the guessed list.
 
             if (chosenSong.indexOf(userInput) > -1) { //Checks to see if the user's input matches any letter in lowercased song name
                 console.log("Correct guess: " + userInput);
                 game.addUserGuessToSpaces(userInput);
 
-                if (game.checkForWin() == true) {
-                    game.playSong(chosenSong);
+                if (game.checkForWin() == true) { //Win logic
+                    document.querySelector("img").style.visibility = "visible";
                     game.setImg(chosenSong);
-                    document.querySelector("#songName").innerHTML = "Last round's song was: <strong>" + unformattedChosenSong + "</br>";
+                    document.querySelector("#songName").innerHTML = "Last round's song was: <em>" + unformattedChosenSong + "</em>";
                     game.restartGame();
                     console.log("YOU HAVE WON!");
-                    wins ++;
+                    wins++;
                     document.querySelector("#wins").innerHTML = wins;
                 }
             } else {
                 guessRemainder--;
                 console.log("Lost a guess. Remaining: " + guessRemainder);
                 document.getElementById("guesses").innerHTML = guessRemainder;
+                if (document.getElementById("guessedLetters").innerHTML === "None yet") {
+                    document.getElementById("guessedLetters").innerHTML = "";
+                }
                 document.getElementById("guessedLetters").innerHTML += userInput + ", "; //pushes wrong letter to guess letters p
             }
 

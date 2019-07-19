@@ -1,12 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap');
+
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
 h1 {
-    font-family: arial, sans-serif;
-    font-size: 20px;
+    /* font-size: 20px;
     text-align: center;
-    margin: 40px 0;
+    margin: 20px 0;
+    font-weight: bold; */
 }
 
 h2 {
-    font-family: arial, sans-serif;
     font-size: 18px;
     text-align: center;
     margin: 20px 0;
@@ -20,6 +25,7 @@ p {
 img {
     width: 100%;
     height: auto;
+    visibility: hidden;
 }
 
 section {
@@ -38,11 +44,12 @@ section {
 }
 
 .letter {
-    color: #eee;
     border-bottom: 1px solid grey;
     margin-right: 4px;
     width: 12px;
     display: inline-block;
+    font-size: 0;
+    line-height: 1em;
 }
 
 .letter:last-of-type {
