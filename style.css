@@ -51,7 +51,7 @@ section {
     width: 12px;
     display: inline-block;
     font-size: 0;
-    line-height: 1em;
+    line-height: 0.7em;
 }
 
 .letter:last-of-type {
