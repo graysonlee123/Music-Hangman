@@ -40,4 +40,11 @@ section {
 .letter {
     color: #eee;
     border-bottom: 1px solid grey;
+    margin-right: 4px;
+    width: 12px;
+    display: inline-block;
+}
+
+.letter:last-of-type {
+    margin-right: 0;
 }

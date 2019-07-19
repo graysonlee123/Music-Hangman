@@ -137,6 +137,8 @@
                     document.querySelector("#songName").innerHTML = "Last round's song was: <strong>" + unformattedChosenSong + "</br>";
                     game.restartGame();
                     console.log("YOU HAVE WON!");
+                    wins ++;
+                    document.querySelector("#wins").innerHTML = wins;
                 }
             } else {
                 guessRemainder--;
