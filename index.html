@@ -8,7 +8,8 @@
     <title>Word Guess Game</title>
 
     <link rel="stylesheet" href="./reset.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -22,16 +23,16 @@
             <img src="https://via.placeholder.com/200" alt="placeholder">
         </div>
         <div class="column shadow p-3 mb-5 bg-white rounded">
-            <p class = ""><strong>Total Wins</strong></p>
+            <p class=""><strong>Total Wins</strong></p>
             <p id="wins">0</p>
             <hr>
-            <p class = ""><strong>Current Word</strong></p>
+            <p class=""><strong>Current Word</strong></p>
             <p id="currentWord"></p>
             <hr>
             <p><strong>Guesses Remaining</strong></p>
             <p id="guesses">15</p>
             <hr>
-            <p class = ""><strong>Already guessed</strong></p>
+            <p class=""><strong>Already guessed</strong></p>
             <p id="guessedLetters">None yet</p>
         </div>
     </section>
@@ -50,57 +51,57 @@
         <source src="./songs/letsgroove.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="pyro">
         <source src="./songs/pyro.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="brandy">
         <source src="./songs/brandy.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="goalltheway">
         <source src="./songs/goalltheway.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="somebodyelse">
         <source src="./songs/somebodyelse.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="paradise">
         <source src="./songs/paradise.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="heyyou">
         <source src="./songs/heyyou.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="bennieandthejets">
         <source src="./songs/bennieandthejets.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="perfectplaces">
         <source src="./songs/perfectplaces.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="therubberbandman">
         <source src="./songs/therubberbandman.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="hymnfortheweekend">
         <source src="./songs/hymnfortheweekend.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    
+
     <audio id="underpressure">
         <source src="./songs/underpressure.mp3" type="audio/mp3">
         Your browser does not support the audio element.
@@ -116,7 +117,7 @@
     const songNames = ["Africa", "Stairway to Heaven", "Lets Groove", "Pyro", "Brandy", "Go All The Way", "Somebody Else", "Paradise", "Hey You", "Bennie And The Jets", "Perfect Places", "The Rubberband Man", "Hymn for the Weekend", "Under Pressure"];
     let chosenSong = songNames[Math.floor(Math.random() * songNames.length)];
     let unformattedChosenSong = chosenSong;
-    chosenSong = chosenSong.replace(/\s/g, '').toLowerCase(); //This removes spaces from the chosen song name.
+    chosenSong = chosenSong.replace(/\s/g, '').toLowerCase(); // This removes spaces from the chosen song name.
 
     console.log("Chosen Song: " + chosenSong);
 
@@ -166,7 +167,7 @@
 
             stopSong: function () {
                 let x = document.querySelectorAll("audio");
-                x.forEach(function(song) {
+                x.forEach(function (song) {
                     song.pause();
                 })
             }
@@ -187,7 +188,7 @@
             chosenSong = songNames[Math.floor(Math.random() * songNames.length)];
             unformattedChosenSong = chosenSong;
             chosenSong = chosenSong.replace(/\s/g, '').toLowerCase(); // remove spaces
-            console.log("New song: " + chosenSong);
+            // console.log("New song: " + chosenSong);
 
             document.getElementById("currentWord").innerHTML = "";
 
@@ -212,39 +213,48 @@
     document.onkeyup = function (logKey) {
         let userInput = logKey.key
 
-        if (guessedLetters.indexOf(userInput) > -1) {
-            console.log("already guessed that letter");
-        } else {
-            guessedLetters.push(userInput); // If not already guessed, push the char to the guessed list.
-
-            if (chosenSong.indexOf(userInput) > -1) { //Checks to see if the user's input matches any letter in lowercased song name
-                console.log("Correct guess: " + userInput);
-                game.addUserGuessToSpaces(userInput);
-
-                if (game.checkForWin() == true) { //Win logic
-                    document.querySelector("img").style.visibility = "visible";
-                    game.setImg(chosenSong);
-                    document.querySelector("#songName").innerHTML = "Last round's song was: <em>" + unformattedChosenSong + "</em>";
-                    game.restartGame();
-                    console.log("YOU HAVE WON!");
-                    wins++;
-                    document.querySelector("#wins").innerHTML = wins;
-                }
+        let letters = /^[a-z]+$/;
+        if (userInput.match(letters)) {
+            console.log("IS lowercase letter");
+            if (guessedLetters.indexOf(userInput) > -1) {
+                console.log("already guessed that letter");
             } else {
-                guessRemainder--;
-                console.log("Lost a guess. Remaining: " + guessRemainder);
-                document.getElementById("guesses").innerHTML = guessRemainder;
-                if (document.getElementById("guessedLetters").innerHTML === "None yet") {
-                    document.getElementById("guessedLetters").innerHTML = "";
+                guessedLetters.push(userInput); // If not already guessed, push the char to the guessed list.
+
+                if (chosenSong.indexOf(userInput) > -1) { //Checks to see if the user's input matches any letter in lowercased song name
+                    console.log("Correct guess: " + userInput);
+                    game.addUserGuessToSpaces(userInput);
+
+                    if (game.checkForWin() == true) { //Win logic
+                        document.querySelector("img").style.visibility = "visible";
+                        game.setImg(chosenSong);
+                        document.querySelector("#songName").innerHTML = "Last round's song was: <em>" + unformattedChosenSong + "</em>";
+                        game.restartGame();
+                        console.log("YOU HAVE WON!");
+                        wins++;
+                        document.querySelector("#wins").innerHTML = wins;
+                    }
+                } else {
+                    guessRemainder--;
+                    console.log("Lost a guess. Remaining: " + guessRemainder);
+                    document.getElementById("guesses").innerHTML = guessRemainder;
+                    if (document.getElementById("guessedLetters").innerHTML === "None yet") {
+                        document.getElementById("guessedLetters").innerHTML = "";
+                    }
+                    document.getElementById("guessedLetters").innerHTML += userInput + ", "; //pushes wrong letter to guess letters p
                 }
-                document.getElementById("guessedLetters").innerHTML += userInput + ", "; //pushes wrong letter to guess letters p
+
+                if (guessRemainder <= 0) {
+                    console.log("Ending Game.");
+                    game.restartGame();
+                }
             }
 
-            if (guessRemainder <= 0) {
-                console.log("Ending Game.");
-                game.restartGame();
-            }
+        } else {
+            alert("Must input a lowercase letter!");
         }
+
+
     }
 </script>
 
