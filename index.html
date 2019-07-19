@@ -29,7 +29,7 @@
             <p id="currentWord"></p>
             <hr>
             <p><strong>Guesses Remaining</strong></p>
-            <p id="guesses">12</p>
+            <p id="guesses">15</p>
             <hr>
             <p class = ""><strong>Already guessed</strong></p>
             <p id="guessedLetters">None yet</p>
@@ -109,7 +109,7 @@
 </body>
 <script>
     let wins = 0;
-    let guessRemainder = 12;
+    let guessRemainder = 15;
     let guessedLetters = [];
     let letterBools = [];
 
@@ -181,7 +181,7 @@
             game.audio.stopSong();
             game.audio.playSong(chosenSong);
 
-            guessRemainder = 12;
+            guessRemainder = 15;
             document.getElementById("guesses").innerHTML = guessRemainder;
 
             chosenSong = songNames[Math.floor(Math.random() * songNames.length)];
