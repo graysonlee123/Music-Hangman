@@ -36,8 +36,10 @@ section {
 }
 
 .column {
-    width: 50%;
+    width: 44%;
     padding: 20px;
+    margin-left: 3%;
+    margin-right: 3%;
     box-sizing: border-box;
     float: left;
     background-color: #eee;
