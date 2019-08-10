@@ -9,7 +9,6 @@ View the deployed site [here](https://graysonlee123.github.io/Music-Hangman/)
 ## Built With
 
 * [Bootsrap](https://getbootstrap.com)
-* [jQuery](https://api.jquery.com)
 
 ## Authors
 
