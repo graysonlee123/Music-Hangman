@@ -13,6 +13,6 @@ View the deployed site [here](https://graysonlee123.github.io/Music-Hangman/)
 
 ## Authors
 
-* **Grayson Gantek** - *Initial work* - [graysonlee123](https://github.com/graysonlee123)
+* **Grayson Gantek** - [graysonlee123](https://github.com/graysonlee123)
 
 See also the list of [contributors](https://github.com/graysonlee123/Music-Hangman/graphs/contributors) who participated in this project.
